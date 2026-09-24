@@ -227,6 +227,3 @@ docker push sidra1634/recipes-service:latest
 docker push sidra1634/ingredients-service:latest
 ```
 
-## Detailed Documentation
-
-For the complete assignment report containing component descriptions, architecture patterns, benefits, challenges, and security discussions, refer to `docs/assignment_report.md`.
