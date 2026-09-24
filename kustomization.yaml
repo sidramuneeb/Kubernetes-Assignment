@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: recipe-app
+
+resources:
+  - kubernetes/namespace.yaml
+  - kubernetes/secrets.yaml
+  - kubernetes/configmap.yaml
+  - kubernetes/postgres-pv.yaml
+  - kubernetes/postgres-pvc.yaml
+  - kubernetes/postgres-deployment.yaml
+  - kubernetes/postgres-service.yaml
+  - kubernetes/recipes-deployment.yaml
+  - kubernetes/recipes-service.yaml
+  - kubernetes/recipes-hpa.yaml
+  - kubernetes/ingredients-deployment.yaml
+  - kubernetes/ingredients-service.yaml
+  - kubernetes/ingredients-hpa.yaml
+  - kubernetes/ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: postgres-init-script
+    files:
+      - init.sql=database/init.sql

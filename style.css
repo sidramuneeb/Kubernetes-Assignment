@@ -1,0 +1,50 @@
+body {
+  background-color: #f6f8fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #24292f;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+.recipe-card {
+  background: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.badge-cat {
+  background-color: #e7f3ff;
+  color: #0969da;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 3px 10px;
+}
+
+.meta-box {
+  background-color: #f6f8fa;
+  border: 1px solid #eaecef;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2da44e;
+  margin-right: 6px;
+}
+
+.status-dot.down {
+  background-color: #cf222e;
+}

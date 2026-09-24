@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recipes-service
+  namespace: recipe-app
+  labels:
+    app: recipes-service
+    app.kubernetes.io/name: recipes-service
+    app.kubernetes.io/part-of: recipe-collection-system
+spec:
+  type: LoadBalancer
+  selector:
+    app: recipes-service
+  ports:
+    - name: http
+      port: 5001
+      targetPort: 5001

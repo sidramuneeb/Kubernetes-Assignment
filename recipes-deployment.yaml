@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipes-deployment
+  namespace: recipe-app
+  labels:
+    app: recipes-service
+    app.kubernetes.io/name: recipes-service
+    app.kubernetes.io/part-of: recipe-collection-system
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: recipes-service
+  template:
+    metadata:
+      labels:
+        app: recipes-service
+    spec:
+      containers:
+        - name: recipes-service
+          image: username/recipes-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+              name: http
+          env:
+            - name: PORT
+              value: "5001"
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: DEBUG
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: RECIPES_DB_NAME
+            - name: INGREDIENTS_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: INGREDIENTS_SERVICE_URL
+            - name: REQUEST_TIMEOUT
+              valueFrom:
+                configMapKeyRef:
+                  name: recipe-app-config
+                  key: REQUEST_TIMEOUT
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: recipe-app-config
+  namespace: recipe-app
+  labels:
+    app.kubernetes.io/name: recipe-app-config
+    app.kubernetes.io/part-of: recipe-collection-system
+data:
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  RECIPES_DB_NAME: "recipes_db"
+  INGREDIENTS_DB_NAME: "ingredients_db"
+  RECIPES_SERVICE_PORT: "5001"
+  INGREDIENTS_SERVICE_PORT: "5002"
+  RECIPES_SERVICE_URL: "http://recipes-service:5001"
+  INGREDIENTS_SERVICE_URL: "http://ingredients-service:5002"
+  REQUEST_TIMEOUT: "5"
+  DEBUG: "False"

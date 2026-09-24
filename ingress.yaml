@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: recipe-app-ingress
+  namespace: recipe-app
+  labels:
+    app.kubernetes.io/name: recipe-app-ingress
+    app.kubernetes.io/part-of: recipe-collection-system
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          # Route Recipes API and Web UI (default root) to Recipes Service
+          - path: /api/recipes
+            pathType: Prefix
+            backend:
+              service:
+                name: recipes-service
+                port:
+                  number: 5001
+          # Route Ingredients API to Ingredients Service
+          - path: /api/ingredients
+            pathType: Prefix
+            backend:
+              service:
+                name: ingredients-service
+                port:
+                  number: 5002
+          # Route Root / Browser UI and static assets to Recipes Service
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: recipes-service
+                port:
+                  number: 5001

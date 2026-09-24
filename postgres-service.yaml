@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: recipe-app
+  labels:
+    app: postgres
+    app.kubernetes.io/name: postgres-service
+    app.kubernetes.io/part-of: recipe-collection-system
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432

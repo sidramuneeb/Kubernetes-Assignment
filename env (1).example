@@ -1,0 +1,9 @@
+PORT=5001
+DEBUG=False
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=recipes_db
+INGREDIENTS_SERVICE_URL=http://localhost:5002
+REQUEST_TIMEOUT=3
